@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: fatec.edu.micronaut
+---
+testFramework: junit
+sourceLanguage: java

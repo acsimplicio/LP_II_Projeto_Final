@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: projeto-final
+  server:
+    cors:
+       enabled: true
+       configurations:
+          web:
+             allowerdMethods:
+                - POST
+                - GET   
