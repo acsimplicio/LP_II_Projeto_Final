@@ -9,6 +9,9 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @MicronautTest
 public class MaratonaControllerTest {
 
@@ -17,11 +20,12 @@ public class MaratonaControllerTest {
 	 RxHttpClient client;
 
 	 @Test
-	 public void testIndex() throws Exception {
+	 public void testGetMaratona() throws Exception {
 		 HttpRequest<String> request = HttpRequest.GET("/maratona");
 	     String body = client.toBlocking().retrieve(request);
 	        
 	     assertNotNull(body);
 	     assertEquals("Hello Controller!",body);
 	 }
+
 }
