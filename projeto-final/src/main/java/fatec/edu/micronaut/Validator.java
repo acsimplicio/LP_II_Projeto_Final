@@ -16,6 +16,7 @@ public class Validator {
 	public ArrayList<Map<String, String>> tries = new ArrayList<Map<String, String>>();
 	private int tryId = 1;
 
+	// Realiza a descriptografia do sourcecode e o escreve em um arquivo .py na pasta \codes
 	public void createPythonFile (String sourcecode, String filename) {
 		String decodedSourceCode = new String(Base64.getDecoder().decode(sourcecode));
 		
@@ -31,6 +32,7 @@ public class Validator {
 		}
 	}
 	
+	// Abre o arquivo com a saída esperada para o problema específico e retorna para o validador
 	public String getExpectedOutput(String problem) {
 		try {
 			FileReader expectedFileReader = new FileReader("assets\\expected_results\\result" + problem + ".txt");
@@ -48,6 +50,7 @@ public class Validator {
 		return null;
 	}
 	
+	// Executa o script python do problema com o input específico para ele e valida se a saída é igual a esperada
 	public String validateResult (String problem, String filename) {
 		String expectedOutput = getExpectedOutput(problem);
 		
@@ -68,6 +71,7 @@ public class Validator {
 		return null;
 	}
 	
+	// Salva a tentativa num Array para que possa ser feita a busca posteriormente
 	public void saveTry (String filename, String problem, String result, String sourcecode) {
 		Map<String, String> newItem = new HashMap<>();
 
