@@ -24,11 +24,13 @@ public class MaratonaController {
     	String filename = body.get("filename");
     	String problem = body.get("problem");
     	
+    	Execution ex = new Execution(filename, sourcecode, problem);
+    	
     	validator.createPythonFile(sourcecode, filename);
     	
     	String result = validator.validateResult(problem, filename);
     	
-    	validator.saveTry(filename, problem, result, sourcecode);
+    	validator.saveTry(ex, result);
     	
     	Map<String, String> response = new HashMap<>();
     	response.put("filename", filename);

@@ -8,12 +8,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Validator {
 	
-	public ArrayList<Map<String, String>> tries = new ArrayList<Map<String, String>>();
+	public ArrayList<Execution> tries = new ArrayList<Execution>();
 	private int tryId = 1;
 
 	// Realiza a descriptografia do sourcecode e o escreve em um arquivo .py na pasta \codes
@@ -72,17 +70,11 @@ public class Validator {
 	}
 	
 	// Salva a tentativa num Array para que possa ser feita a busca posteriormente
-	public void saveTry (String filename, String problem, String result, String sourcecode) {
-		Map<String, String> newItem = new HashMap<>();
-
-		newItem.put("sourcecode", sourcecode);
-		newItem.put("filename", filename);
-		newItem.put("status", result);
-		newItem.put("problem", problem);
-		newItem.put("datetime", java.time.LocalDateTime.now().toString());
-		newItem.put("id", String.valueOf(this.tryId));
-		
-		this.tries.add(newItem);
+	public void saveTry (Execution ex, String result) {
+		ex.setStatus(result);
+		ex.setId(this.tryId);
+	
+		this.tries.add(ex);
 		this.tryId++;
 	}
 	
