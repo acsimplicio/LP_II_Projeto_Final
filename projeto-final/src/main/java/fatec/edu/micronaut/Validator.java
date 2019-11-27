@@ -8,10 +8,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 
 public class Validator {
 	
-	public ArrayList<Execution> tries = new ArrayList<Execution>();
+	private ArrayList<Execution> tries = new ArrayList<Execution>();
 	private int tryId = 1;
 
 	// Realiza a descriptografia do sourcecode e o escreve em um arquivo .py na pasta \codes
@@ -77,5 +79,38 @@ public class Validator {
 		this.tries.add(ex);
 		this.tryId++;
 	}
+	
+	// Realiza a pesquisa das execuções pelos parâmetros passados
+	public List<Execution> searchExecutions(Map<String, String> search){
+		
+		ArrayList<String> keySearch = new ArrayList<String>(search.keySet());
+		ArrayList<Execution> found = new ArrayList<Execution>();
+	
+    	for(String key:keySearch) {
+    		if (key.equals("status")) {
+    			for (Execution execucao: tries) {
+    				if (execucao.getStatus().equals(search.get(key))) 
+    					found.add(execucao);
+    			}
+    			return found;
+    		}
+    		
+    		if (key.equals("id"))  {
+        			for (Execution execucao: tries) {
+        				if (execucao.getProblem().equals(search.get("id"))) 
+        					found.add(execucao);
+        			}
+        			return found;
+        		}
+    		if (key.equals("date"))  {
+    			for (Execution execucao: tries) {
+    				if (execucao.getDatetime().equals(search.get("date")))
+    					found.add(execucao);
+    			}
+    			return found;
+    		}
+    	}
+    	return found;
+    }
 	
 }

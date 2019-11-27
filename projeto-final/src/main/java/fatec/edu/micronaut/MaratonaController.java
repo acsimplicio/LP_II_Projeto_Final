@@ -1,6 +1,7 @@
 package fatec.edu.micronaut;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.micronaut.http.annotation.Body;
@@ -15,7 +16,7 @@ public class MaratonaController {
 	
 	@Get("/")
     public String getMaratona() {
-        return "Hello Controller!";
+        return validator.searchExecutions().toString();
     }
     
     @Post("/")
