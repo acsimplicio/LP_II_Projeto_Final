@@ -14,9 +14,9 @@ import io.micronaut.http.annotation.Post;
 public class MaratonaController {
 	Validator validator = new Validator();
 	
-	@Get("/")
-    public String getMaratona() {
-        return validator.searchExecutions().toString();
+	@Get("/{?body*}")
+    public List<Execution> getMaratona(Map<String, String> body) {
+        return validator.searchExecutions(body);
     }
     
     @Post("/")
