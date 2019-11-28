@@ -1,6 +1,5 @@
 package fatec.edu.micronaut;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,30 +13,21 @@ import io.micronaut.http.annotation.Post;
 public class MaratonaController {
 	Validator validator = new Validator();
 	
-	@Get("/{?body*}")
-    public List<Execution> getMaratona(Map<String, String> body) {
-        return validator.searchExecutions(body);
+	@Get("/{?search*}")
+    public List<Execution> getMaratona(Map<String, String> search) {
+        return validator.searchExecutions(search);
     }
     
     @Post("/")
     public Map<String, String> postMaratona(@Body Map<String, String> body) {
-    	String sourcecode = body.get("sourcecode");
-    	String filename = body.get("filename");
-    	String problem = body.get("problem");
+    	Execution ex = new Execution(body.get("filename"), body.get("sourcecode"), body.get("problem"));
     	
-    	Execution ex = new Execution(filename, sourcecode, problem);
+    	validator.createPythonFile(ex);
     	
-    	validator.createPythonFile(sourcecode, filename);
-    	
-    	String result = validator.validateResult(problem, filename);
+    	String result = validator.validateResult(ex);
     	
     	validator.saveTry(ex, result);
     	
-    	Map<String, String> response = new HashMap<>();
-    	response.put("filename", filename);
-    	response.put("problem", problem);
-    	response.put("status", result);
-    	
-    	return response;
+    	return ex.mapResponse();
     }
 }

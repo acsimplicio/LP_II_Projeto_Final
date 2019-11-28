@@ -1,12 +1,18 @@
 package fatec.edu.micronaut;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+
 public class Execution {
 	private String sourcecode;
 	private String filename;
 	private String problem;
 	private String status;
 	private String datetime;
-	private int id;
+	private String id;
 	
 	public String getSourcecode() {
 		return sourcecode;
@@ -38,18 +44,30 @@ public class Execution {
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
 	public Execution(String filename, String sourcecode, String problem) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
+		
 		this.setFilename(filename);
 		this.setSourcecode(sourcecode);
 		this.setProblem(problem);
-		this.setDatetime(java.time.LocalDateTime.now().toString());
+		this.setDatetime(dateFormat.format(new Date()));
+	}
+	
+	public Map<String, String> mapResponse() {
+		Map<String, String> response = new HashMap<String, String>();
+		response.put("filename", this.getFilename());
+		response.put("problem", this.getProblem());
+		response.put("status", this.getStatus());
+		
+		return response;
 	}
 	
 }

@@ -17,11 +17,11 @@ public class Validator {
 	private int tryId = 1;
 
 	// Realiza a descriptografia do sourcecode e o escreve em um arquivo .py na pasta \codes
-	public void createPythonFile (String sourcecode, String filename) {
-		String decodedSourceCode = new String(Base64.getDecoder().decode(sourcecode));
+	public void createPythonFile (Execution ex) {
+		String decodedSourceCode = new String(Base64.getDecoder().decode(ex.getSourcecode()));
 		
 		try {
-			FileWriter pythonFile = new FileWriter("assets\\codes\\" + filename);
+			FileWriter pythonFile = new FileWriter("assets\\codes\\" + ex.getFilename());
 			PrintWriter pythonFileWriter = new PrintWriter(pythonFile);
 			
 			pythonFileWriter.printf(decodedSourceCode);
@@ -51,11 +51,11 @@ public class Validator {
 	}
 	
 	// Executa o script python do problema com o input específico para ele e valida se a saída é igual a esperada
-	public String validateResult (String problem, String filename) {
-		String expectedOutput = getExpectedOutput(problem);
+	public String validateResult (Execution ex) {
+		String expectedOutput = getExpectedOutput(ex.getProblem());
 		
 		try {
-			String command = "cmd.exe /c python assets/codes/"+ filename +" < assets/inputs/input"+ problem +".txt";
+			String command = "cmd.exe /c python assets/codes/"+ ex.getFilename() +" < assets/inputs/input"+ ex.getProblem() +".txt";
 			Process p = Runtime.getRuntime().exec(command);
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -74,7 +74,7 @@ public class Validator {
 	// Salva a tentativa num Array para que possa ser feita a busca posteriormente
 	public void saveTry (Execution ex, String result) {
 		ex.setStatus(result);
-		ex.setId(this.tryId);
+		ex.setId(Integer.toString(this.tryId));
 	
 		this.tries.add(ex);
 		this.tryId++;
@@ -97,14 +97,14 @@ public class Validator {
     		
     		if (key.equals("id"))  {
         			for (Execution execucao: tries) {
-        				if (execucao.getProblem().equals(search.get("id"))) 
+        				if (execucao.getId().equals(search.get("id")))
         					found.add(execucao);
         			}
         			return found;
         		}
-    		if (key.equals("date"))  {
+    		if (key.equals("datetime"))  {
     			for (Execution execucao: tries) {
-    				if (execucao.getDatetime().equals(search.get("date")))
+    				if (execucao.getDatetime().equals(search.get("datetime")))
     					found.add(execucao);
     			}
     			return found;
