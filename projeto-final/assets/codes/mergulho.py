@@ -9,11 +9,13 @@ if len(mr) == 2:
     mergulhadores = range(1, int(mr[0]) + 1)
     retornados = quem.split(" ")
 
+    resultadoList = []
     resultado = ""
 
     for m in mergulhadores:
         if not str(m) in retornados:
-            resultado = resultado + str(m) + " "
+            resultadoList.append(str(m))
+    resultado = " ".join(resultadoList)
 
     if resultado == "":
         resultado = "*"

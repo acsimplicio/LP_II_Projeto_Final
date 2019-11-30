@@ -11,22 +11,25 @@ import io.micronaut.http.annotation.Post;
 
 @Controller("/maratona")
 public class MaratonaController {
-	Validator validator = new Validator();
 	
-	@Get("/{?search*}")
-    public List<Execution> getMaratona(Map<String, String> search) {
-        return validator.searchExecutions(search);
+	FileManager fileManager = new FileManager();
+	Validator validator = new Validator();
+	Log logs = new Log();
+	
+	@Get("/{?searchParameter*}")
+    public List<Execution> getMaratona(Map<String, String> searchParameter) {
+        return logs.searchLog(searchParameter);
     }
     
     @Post("/")
     public Map<String, String> postMaratona(@Body Map<String, String> body) {
     	Execution ex = new Execution(body.get("filename"), body.get("sourcecode"), body.get("problem"));
     	
-    	validator.createPythonFile(ex);
+    	fileManager.createPythonFile(ex);
     	
-    	String result = validator.validateResult(ex);
+    	String result = validator.validateExecution(ex);
     	
-    	validator.saveTry(ex, result);
+    	logs.saveLog(ex, result);
     	
     	return ex.mapResponse();
     }

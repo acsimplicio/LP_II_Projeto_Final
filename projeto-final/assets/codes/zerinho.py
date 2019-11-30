@@ -19,3 +19,5 @@ elif n_1 == 1:
     print (get_vencedor(numeros.index("1")))
 else:
     print ("*")
+
+        

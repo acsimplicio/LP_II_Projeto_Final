@@ -1,10 +1,9 @@
 package fatec.edu.micronaut;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class Execution {
 	private String sourcecode;
@@ -52,13 +51,12 @@ public class Execution {
 	}
 	
 	public Execution(String filename, String sourcecode, String problem) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		
 		this.setFilename(filename);
 		this.setSourcecode(sourcecode);
 		this.setProblem(problem);
-		this.setDatetime(dateFormat.format(new Date()));
+		this.setDatetime(LocalDateTime.now().format(dateFormat));
 	}
 	
 	public Map<String, String> mapResponse() {
