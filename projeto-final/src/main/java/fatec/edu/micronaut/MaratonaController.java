@@ -26,10 +26,8 @@ public class MaratonaController {
     	Execution ex = new Execution(body.get("filename"), body.get("sourcecode"), body.get("problem"));
     	
     	fileManager.createPythonFile(ex);
-    	
-    	String result = validator.validateExecution(ex);
-    	
-    	logs.saveLog(ex, result);
+    	validator.validateExecution(ex);
+    	logs.saveLog(ex);
     	
     	return ex.mapResponse();
     }

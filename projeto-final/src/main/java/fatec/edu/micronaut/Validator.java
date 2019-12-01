@@ -10,7 +10,7 @@ public class Validator {
 	FileManager fileManager = new FileManager();
 	
 	// Valida a execução do código postado
-	public String validateExecution (Execution ex) {
+	public void validateExecution (Execution ex) {
 		ArrayList<String> results = new ArrayList<String>();
 		int numberOfInputs = getNumberOfInputs(ex.getProblem());
 		
@@ -18,8 +18,11 @@ public class Validator {
 			results.add(validateOutput(ex, inputNumber));
 		}
 		
-		if (results.contains("FAIL")) return "FAIL";
-		return "SUCCESS";
+		if (results.contains("FAIL")) {
+			ex.setStatus("FAIL");
+		} else {
+			ex.setStatus("SUCCESS");
+		}
 	}
 	
 	// Retorna o número de inputs que cada problema necessita

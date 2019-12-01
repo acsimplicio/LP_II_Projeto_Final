@@ -6,16 +6,12 @@ import java.util.Map;
 
 public class Log {
 	
-	// Lista que armazena os logs de execução
-	private ArrayList<Execution> logs = new ArrayList<Execution>();
-	// Id (incremental) dado para cada log no salvamento
-	private int executionId = 1;
+	private ArrayList<Execution> logs = new ArrayList<Execution>(); // Lista que armazena os logs de execução
+	private int executionId = 1; // Id (incremental) dado para cada log no salvamento
 	
 	// Salva a execução no Array de logs para que possa ser feita a busca posteriormente
-	public void saveLog (Execution ex, String result) {
-		ex.setStatus(result);
+	public void saveLog (Execution ex) {
 		ex.setId(Integer.toString(this.executionId));
-	
 		this.logs.add(ex);
 		this.executionId++;
 	}
